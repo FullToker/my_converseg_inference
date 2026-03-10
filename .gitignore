@@ -34,3 +34,4 @@ tb/
 preds*/
 *.torch
 lora_plm_adapter*/
+checkpoints/
