@@ -258,7 +258,7 @@ def build_model(args):
     predictor = SAM2ImagePredictor(model)
     predictor.model.eval()
 
-    sd = torch.load(args.final_ckpt, map_location=device)
+    sd = torch.load(args.final_ckpt, map_location=device, weights_only=False)
     predictor.model.load_state_dict(sd.get("model", sd), strict=True)
 
     C = predictor.model.sam_mask_decoder.transformer_dim
