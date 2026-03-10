@@ -24,14 +24,9 @@ WORKDIR /app
 RUN pip install --no-cache-dir \
         torch==2.9.0 torchvision==0.24.0
 
-# ── 复制项目 ──
-COPY . /app/
-
-# ── 初始化并安装 SAM2 子模块 ──
-RUN git submodule update --init --recursive || true \
-    && if [ -f sam2/setup.py ] || [ -f sam2/pyproject.toml ]; then \
-         pip install --no-cache-dir -e ./sam2; \
-       fi
+# ── 从官方仓库安装 SAM2 ──
+RUN git clone https://github.com/facebookresearch/sam2.git /app/sam2 \
+    && pip install --no-cache-dir -e /app/sam2
 
 # ── 安装项目依赖 ──
 RUN pip install --no-cache-dir \
