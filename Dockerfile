@@ -18,15 +18,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && ln -sf /usr/local/bin/pip3 /usr/local/bin/pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /workspace
 
 # ── 先装 PyTorch（利用 Docker 缓存层） ──
 RUN pip install --no-cache-dir \
         torch==2.9.0 torchvision==0.24.0
 
-# ── 从官方仓库安装 SAM2 ──
-RUN git clone https://github.com/facebookresearch/sam2.git /app/sam2 \
-    && pip install --no-cache-dir -e /app/sam2
+# ── 从官方仓库安装 SAM2（装到 /opt/sam2 避免与 /app 挂载冲突） ──
+RUN git clone https://github.com/facebookresearch/sam2.git /opt/sam2 \
+    && pip install --no-cache-dir /opt/sam2
 
 # ── 安装项目依赖 ──
 RUN pip install --no-cache-dir \
