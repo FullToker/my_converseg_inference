@@ -58,6 +58,3 @@ RUN pip install --no-cache-dir \
         psutil==7.1.1 \
         gpustat==1.1.1
 
-# ── 默认入口 ──
-ENTRYPOINT ["python"]
-CMD ["demo.py", "--help"]
